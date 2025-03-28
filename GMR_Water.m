@@ -1,5 +1,7 @@
 function GMR_Water(varargin)
 %% settings Structure Documentation
+% git push -u origin develop
+
 % settings
 %     .Station_info_file
 %       string - Path to the station information file (.mat format).
