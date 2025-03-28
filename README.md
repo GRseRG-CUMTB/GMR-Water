@@ -28,12 +28,12 @@ GMR-Water requires MATLAB 2022a or later versions to operate.
 
 The GMR-Water software offers two initialization modes: it can be executed either through an interactive graphical user interface (GUI) or via function calls in batch processing mode using scripts.
 <u>**Run in GUI mode**</u>
-The main interface of the software is "**Start.mlapp**", as shown in Figure 3-1. The left side of the software features the functional area, which includes modules for five water level retrieval methods using multi-observation (SNR, carrier phase and pseudo range), along with the "batch processing" and the "analysis final file". On the right side of the start interface, there is an introduction and schematic diagram of GNSS-MR technology.
+The main interface of the software is "**Start.mlapp**", as shown in Figure 1. The left side of the software features the functional area, which includes modules for five water level retrieval methods using multi-observation (SNR, carrier phase and pseudo range), along with the "batch processing" and the "analysis final file". On the right side of the start interface, there is an introduction and schematic diagram of GNSS-MR technology.
 
 ![start](./icon/start_GUI.png)
 
 
-**Figure 3-1.** The start interface of GMR-Water
+**Figure 1.** The start interface of GMR-Water
 
 <u>**Run as a function**</u>
 

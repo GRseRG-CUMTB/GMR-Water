@@ -169,7 +169,6 @@ function pngFiles = getPNGPaths(folderPath)
     
     pngFiles = strings(size(fileList));
     for i = 1:length(fileList)
-        % 获取相对于输入文件夹的路径
         [~, relPath] = fileparts(fileList(i).folder);
         relPath = strrep(fullfile(relPath, fileList(i).name), [folderPath filesep], '');
         pngFiles(i) = relPath;
