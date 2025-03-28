@@ -1,0 +1,315 @@
+commit 5f8bd54ad7e46d9d210b5caae70566d43c99a88a
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-06-13
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-06-13
+
+    Bump package and library versions
+
+commit 1e4082c7e5c4c2aa4f192b73790274e614134170
+Merge: 486b4baf feb4e242
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-06-13
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-06-13
+
+    Merge pull request #1247 from ngtcp2/refactor-frame-chain-stream-allocation
+    
+    Refactor ngtcp2_frame_chain allocation for ngtcp2_stream
+
+commit feb4e242445c097c1aff0399879e2892e7e3df46
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-06-13
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-06-13
+
+    Refactor ngtcp2_frame_chain allocation for ngtcp2_stream
+    
+    Simplify ngtcp2_frame_chain allocation and deallocation for
+    ngtcp2_stream with new macros.
+
+commit 486b4baf3cdd6e0caa2c5c7a62c87b570fb07845
+Merge: 162f9a15 af11b29c
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-06-12
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-06-12
+
+    Merge pull request #1245 from ngtcp2/fix-frame-chain-mem-leak
+    
+    Fix memory leak when stream datacnt gets below allocation threshold
+
+commit af11b29c83294d7bd4f85ccfee8186bcf0d17024
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-06-12
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-06-12
+
+    Fix memory leak when stream datacnt gets below allocation threshold
+
+commit 162f9a15cb8e119f539ee7a6a9117698a34bbf7a
+Merge: 7a94ab93 a664e290
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-06-11
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-06-11
+
+    Merge pull request #1243 from ngtcp2/bump-picotls
+    
+    Bump picotls
+
+commit a664e290e3298a705eb88e07b27a061b79028007
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-06-11
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-06-11
+
+    Bump picotls
+
+commit 7a94ab9333e392b3a13c27e315a17a0d33cf86bf
+Merge: 2a8f76d4 50ba2a44
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-06-11
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-06-11
+
+    Merge pull request #1242 from ngtcp2/bump-aws-lc
+    
+    Bump aws-lc to v1.29.0
+
+commit 50ba2a441fd5c2e356e5d64834e5a3cd1579571b
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-06-11
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-06-11
+
+    Bump aws-lc to v1.29.0
+
+commit 2a8f76d45d98b266a7870e9f2d7be33f46aa4069
+Merge: e8d5dd88 19154992
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-06-11
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-06-11
+
+    Merge pull request #1241 from ngtcp2/bump-boringssl
+    
+    Bump boringssl
+
+commit 1915499208d5058fe81ef40de4abed8fd7d75529
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-06-11
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-06-11
+
+    Bump boringssl
+
+commit e8d5dd88ba7bed84edea30be14a1f876d3703f10
+Merge: 22a96e7d 5edbefb2
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-06-11
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-06-11
+
+    Merge pull request #1240 from ngtcp2/reset-pto_count-on-timer-cancel
+    
+    Reset pto_count when disarming loss detection timer
+
+commit 5edbefb256344e82223d5923c232d33dc7315db6
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-06-11
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-06-11
+
+    Reset pto_count when disarming loss detection timer
+
+commit 22a96e7d7170971c3011c30aceaa12b52fe5ba13
+Merge: f5a94765 9a32ba3b
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-06-10
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-06-10
+
+    Merge pull request #1239 from ngtcp2/fix-typo
+    
+    Update doc
+
+commit f5a947659ecf2ece37f5f0b3b295feb40845a200
+Merge: 33de89ba 386ff85f
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-06-10
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-06-10
+
+    Merge pull request #1238 from ngtcp2/alloc-acktr-entry
+    
+    Allocate ngtcp2_acktr_entry at once not to waste memory
+
+commit 9a32ba3ba76699dbae22fd8a8dee8e5aeae2ba58
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-06-10
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-06-10
+
+    Update doc
+
+commit 386ff85faaa69b5df2f24372663308bb4fa098e2
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-06-10
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-06-10
+
+    Allocate ngtcp2_acktr_entry at once not to waste memory
+
+commit 33de89bae372b9677cc28b9f9008786eaa03c52d
+Merge: 4fa72d2d f7b587e5
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-06-08
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-06-08
+
+    Merge pull request #1237 from ngtcp2/adjust-acktr-max-ent
+    
+    Adjust NGTCP2_ACKTR_MAX_ENT to match NGTCP2_MAX_ACK_RANGES + 1
+
+commit f7b587e54035eee80b5eb37b39d1ab82b484976c
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-06-08
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-06-08
+
+    Adjust NGTCP2_ACKTR_MAX_ENT to match NGTCP2_MAX_ACK_RANGES + 1
+    
+    Because we create ACK frame with at most NGTCP2_MAX_ACK_RANGES + 1
+    ranges, including the first range, no need to remember more than those
+    ranges.
+
+commit 4fa72d2dc00d72c1a184a94e2bd668a2a028dd31
+Merge: 3d71f527 bf8de467
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-06-08
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-06-08
+
+    Merge pull request #1235 from ngtcp2/less-memory
+    
+    Adjust memory pool allocation units to reduce allocation size
+
+commit bf8de4670742e43836c88756e46d497d5c7a7507
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-06-08
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-06-08
+
+    Adjust memory pool allocation units to reduce allocation size
+
+commit 3d71f52740234541b5804255c5b75d8a6c2bcd12
+Merge: 63564aa7 ecc1336f
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-05-19
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-05-19
+
+    Merge pull request #1229 from ngtcp2/fix-conn-stat-max-tx-udp-payload-size
+    
+    Fix ngtcp2_conn_stat.max_tx_udp_payload_size update
+
+commit ecc1336f5cdb1d8b8b44bebc5c226d223419b294
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-05-19
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-05-19
+
+    Fix ngtcp2_conn_stat.max_tx_udp_payload_size update
+    
+    Fix ngtcp2_conn_stat.max_tx_udp_payload_size update to consider the
+    case where no_tx_udp_payload_size_shaping is enabled.
+    
+    Fix the document so that ngtcp2_conn_stat.max_tx_udp_payload_size is
+    the maximum UDP payload size for the current path.
+
+commit 63564aa70a532582e989ff161922928c31420fe3
+Merge: 48e8f996 7e118f12
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-05-17
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-05-17
+
+    Merge pull request #1228 from ngtcp2/keepalive-pto
+    
+    Keep-alive packet should trigger PTO
+
+commit 7e118f1278237146262610180d84b0c994feef5b
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-05-17
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-05-17
+
+    Keep-alive packet should trigger PTO
+    
+    Keep-alive packet should trigger PTO to deal with the packet loss.
+
+commit 48e8f996984e6cfea879b0b2c7bf2d7b2511ed99
+Merge: 039449ae 67068734
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-05-12
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-05-12
+
+    Merge pull request #1224 from ngtcp2/update-doc
+    
+    GitHub does not understand :rfc:
+
+commit 67068734fcae7fd5d7519ff039f21866d3c2c0a8
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-05-12
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-05-12
+
+    GitHub does not understand :rfc:
+
+commit 039449ae8bf0424db1e599187dbc06a2d8f70ae1
+Merge: 51aee28d bf7c0c2f
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-05-12
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-05-12
+
+    Merge pull request #1223 from ngtcp2/remove-ngtcp2-min-max
+    
+    Remove ngtcp2_min and ngtcp2_max
+
+commit bf7c0c2f5baf2974bea31606220d145f1500d66a
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-05-12
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-05-12
+
+    Remove ngtcp2_min and ngtcp2_max
+
+commit 51aee28d9cde71a73c13cef93c0cf4d68682af5b
+Merge: af274d8f 1ff7aee5
+Author:     Tatsuhiro Tsujikawa <404610+tatsuhiro-t@users.noreply.github.com>
+AuthorDate: 2024-05-10
+Commit:     GitHub <noreply@github.com>
+CommitDate: 2024-05-10
+
+    Merge pull request #1222 from ngtcp2/examples-print-negotiated-group
+    
+    examples: Print negotiated group if TLS stack gives that information
+
+commit 1ff7aee5092418febc9abfe6f13a2b3d0bcc3e49
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-05-10
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-05-10
+
+    examples: Print negotiated group if TLS stack gives that information
+
+commit af274d8f6f5ddeef759d181730bbdeb81044cdb1
+Author:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+AuthorDate: 2024-05-09
+Commit:     Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+CommitDate: 2024-05-09
+
+    Bump package version
