@@ -11,6 +11,7 @@ if Tide_available
     xaxis = tide(:,1);
     slvl  = tide(:,2);
 end
+% clear output dir
 fileList = dir(fullfile(settings.results, '*.*'));
 for i = 1:length(fileList)
     if ~fileList(i).isdir
@@ -85,7 +86,7 @@ for f = 1 : settings.filenumber
     if ~exist([settings.results,'/pic'], "dir")
         mkdir([settings.results,'/pic'])
     end
-    pic_name = [settings.results,'/pic/', settings.station_name, '_',file_info{2},'_',file_info{3}];
+    pic_name = [settings.results,'/pic/', settings.station_name, '_',file_info{2},'_',file_info{3},'_',file_info{4}(1:end-4)];
 
     %% Denoising the raw data
     if ~exist([settings.results,'/RH_info'], "dir")
@@ -182,11 +183,11 @@ for f = 1 : settings.filenumber
 
     %% Display
     % Azimuth
-    if settings.azi
-        azi = RH_info_all{:,"MEAN_AZI"};
-        RH = RH_info_all{:,"RH"};
-        scatter(azi, RH, 'filled')
-    end
+    % if settings.azi
+    %     azi = RH_info_all{:,"MEAN_AZI"};
+    %     RH = RH_info_all{:,"RH"};
+    %     scatter(azi, RH, 'filled')
+    % end
 
     % daily number
     if settings.day_num
@@ -249,20 +250,20 @@ for f = 1 : settings.filenumber
             RH_info_all(out_ind,:) = [];
         end
 
-        Result_display_SNR_Spectral_CMC(settings, RH_info_all,time_tide,sea_level_tide, colors,start_date,end_date)
+        Result_display_SNR_Spectral_CMC(settings, RH_info_all,time_tide,sea_level_tide, colors, start_date, end_date)
         % save picture
-        name = [pic_name,'_SNR-Spectral'];
-        saveas(gcf, [name,'.fig']);
-        print(gcf, [name,'.png'], '-dpng', '-r300')
+        saveas(gcf, [pic_name,'.fig']);
+        print(gcf, [pic_name,'.png'], '-dpng', '-r300')
         if settings.cor
             if Tide_available
                 figure
+                set(gcf, 'Units','normalized','OuterPosition',[0.25,0.25,0.35,0.5])
                 ir_t = RH_info_all{:,"Time"};
                 ir_h = settings.antenna_height - RH_info_all{:,"RH"};
                 cor_scatter(ir_h, datenum(ir_t), sea_level_tide, datenum(time_tide))
                 ylabel('Tide gauge (m)')
                 xlabel('GNSS-IR raw inversion value (m)')
-                name = [pic_name,'_SNR-Spectral_scatter'];
+                name = [pic_name,'_scatter'];
                 saveas(gcf, [name,'.fig']);
                 print(gcf, [name,'.png'], '-dpng', '-r300')
             else
@@ -275,15 +276,17 @@ for f = 1 : settings.filenumber
             fig_set.sta_asl = settings.antenna_height;
             fig_set.tidal_info = {time_tide, sea_level_tide};
             [t_rrs,rh_rrs, RMSE_rrs, Bias_rrs] = rrs(RH_info_all, start_date, end_date, fig_set);
-            name = [pic_name,'_SNR-Spectral_rrs'];
+            name = [pic_name,'_rrs'];
             saveas(gcf, [name,'.fig']);
+            print(gcf, [name,'.png'], '-dpng', '-r300')
             save([name,'.mat'],"t_rrs","rh_rrs", "RMSE_rrs", "Bias_rrs")
             if settings.cor
                 figure
+                set(gcf, 'Units','normalized','OuterPosition',[0.25,0.25,0.35,0.5])
                 cor_scatter(rh_rrs', datenum(t_rrs'), sea_level_tide, datenum(time_tide))
                 ylabel('Tide gauge (m)')
                 xlabel('GNSS-IR Robust regression strategy (m)')
-                name = [pic_name,'_SNR-Spectral_rrs_scatter'];
+                name = [pic_name,'_rrs_scatter'];
                 saveas(gcf, [name,'.fig']);
                 print(gcf, [name,'.png'], '-dpng', '-r300')
             end
@@ -294,7 +297,7 @@ for f = 1 : settings.filenumber
             fig_set.sta_asl = settings.antenna_height;
             fig_set.tidal_info = {time_tide, sea_level_tide};
             [t_b_spline,rh_b_spline, RMSE_b, Bias_b] = B_spline(RH_info_all, start_date, end_date, fig_set);
-            name = [pic_name,'_SNR-Spectral_b_spline'];
+            name = [pic_name,'_b_spline'];
             saveas(gcf, [name,'.fig']);
             print(gcf, [name,'.png'], '-dpng', '-r300')
             save([name,'.mat'],"t_b_spline","rh_b_spline", "RMSE_b", "Bias_b")
@@ -303,13 +306,13 @@ for f = 1 : settings.filenumber
                 cor_scatter(rh_b_spline', datenum(t_b_spline'), sea_level_tide, datenum(time_tide))
                 ylabel('Tide gauge (m)')
                 xlabel('GNSS-IR B-spline (m)')
-                name = [pic_name,'_SNR-Spectral_b_spline_scatter'];
+                name = [pic_name,'_b_spline_scatter'];
                 saveas(gcf, [name,'.fig']);
                 print(gcf, [name,'.png'], '-dpng', '-r300')
             end
         end
 
-        % SNR-Inverse modeling
+%%%%%%%%%%%%%%%% SNR-Inverse modeling %%%%%%%%%%%%%%%%%%
     elseif string(file_info{4}) == "SNR-Inverse.mat"
         time = RH_info_all.Time;
         RH_inverse_modeling = settings.antenna_height - RH_info_all.RH_Inverse;
@@ -377,18 +380,17 @@ for f = 1 : settings.filenumber
         end
 
         set(gcf, 'Units', 'normalized', 'OuterPosition', [0 0 1 1]);
-        name = [pic_name,'_',file_info{4}(1:end-4)];
-        saveas(gcf, [name,'.fig']);
+        
+        saveas(gcf, [pic_name,'.fig']);
         print(gcf, [name,'.png'], '-dpng', '-r300')
 
 
-        % OBS-carrier / pseudo range
+%%%%%%%%%%% OBS-carrier / pseudo range %%%%%%%%%%%%%%%%
     else
         Result_display_OBS(RH_info_all, settings, time_tide, sea_level_tide, end_date, start_date, colors);
         % save picture
-        name = [pic_name,'_',file_info{4}(1:end-4)];
-        saveas(gcf, [name,'.fig']);
-        print(gcf, [name,'.png'], '-dpng', '-r300')
+        saveas(gcf, [pic_name,'.fig']);
+        print(gcf, [pic_name,'.png'], '-dpng', '-r300')
         if settings.cor
             figure
             ir_t = RH_info_all{:,"Time"};
@@ -397,7 +399,7 @@ for f = 1 : settings.filenumber
             cor_scatter(ir_h, datenum(ir_t), sea_level_tide, datenum(time_tide))
             ylabel('Tide gauge (m)')
             xlabel('GNSS-IR raw inversion value (m)')
-            name = [pic_name,'_',file_info{4}(1:end-4),'_scatter'];
+            name = [pic_name,'_scatter'];
             saveas(gcf, [name,'.fig']);
             print(gcf, [name,'.png'], '-dpng', '-r300')
         end
@@ -407,7 +409,7 @@ for f = 1 : settings.filenumber
             fig_set.sta_asl = settings.antenna_height;
             fig_set.tidal_info = {time_tide, sea_level_tide};
             [t_rrs, rh_rrs, RMSE_rrs, Bias_rrs] = rrs(RH_info_all, start_date, end_date, fig_set);
-            name = [pic_name,'_',file_info{4}(1:end-4),'_rrs'];
+            name = [pic_name,'_rrs'];
             saveas(gcf, [name,'.fig']);
             print(gcf, [name,'.png'], '-dpng', '-r300')
             save([name,'.mat'],"t_rrs","rh_rrs", "RMSE_rrs", "Bias_rrs")
@@ -416,7 +418,7 @@ for f = 1 : settings.filenumber
                 cor_scatter(rh_rrs', datenum(t_rrs'), sea_level_tide, datenum(time_tide))
                 ylabel('Tide gauge (m)')
                 xlabel('GNSS-IR Robust regression strategy (m)')
-                name = [pic_name,'_',file_info{4}(1:end-4),'_rrs_scatter'];
+                name = [pic_name,'_rrs_scatter'];
                 saveas(gcf, [name,'.fig']);
                 print(gcf, [name,'.png'], '-dpng', '-r300')
             end
@@ -427,7 +429,7 @@ for f = 1 : settings.filenumber
             fig_set.sta_asl = settings.antenna_height;
             fig_set.tidal_info = {time_tide, sea_level_tide};
             [t_b_spline,rh_b_spline, RMSE_b, Bias_b] = B_spline(RH_info_all, start_date, end_date, fig_set);
-            name = [pic_name,'_',file_info{4}(1:end-4),'_b_spline'];
+            name = [pic_name,'_b_spline'];
             saveas(gcf, [name,'.fig']);
             print(gcf, [name,'.png'], '-dpng', '-r300')
             save([name,'.mat'],"t_b_spline","rh_b_spline", "RMSE_b", "Bias_b")
@@ -436,7 +438,7 @@ for f = 1 : settings.filenumber
                 cor_scatter(rh_b_spline', datenum(t_b_spline'), sea_level_tide, datenum(time_tide))
                 ylabel('Tide gauge (m)')
                 xlabel('GNSS-IR B-spline (m)')
-                name = [pic_name,'_',file_info{4}(1:end-4),'_b_spline_scatter'];
+                name = [pic_name,'_b_spline_scatter'];
                 saveas(gcf, [name,'.fig']);
             end
         end

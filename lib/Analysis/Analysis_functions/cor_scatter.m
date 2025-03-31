@@ -38,7 +38,7 @@ hold off
 
 legend([l1,l2],{'y = x','Linear fitting'})
 colorbar
-set(gcf, 'Units','normalized','OuterPosition',[0.25,0.25,0.35,0.5])
+
 end
 
 function [CData,h,XMesh,YMesh,ZMesh,colorList] = density2C(X,Y,XList,YList,colorList)

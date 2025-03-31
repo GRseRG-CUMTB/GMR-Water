@@ -15,11 +15,11 @@ settings.Out_path          = 'G:\GNSS-IR_data\Solutions\water level\BRST\2023';
 settings.station_name      = 'BRST';
 
 % Inversion settings
-settings.methods = [1,1,1,1,1];
+settings.methods = [1,0,1,1,1];
 
 % process flow
-settings.flow = [1 1 1 1];
-settings.par  = '6';
+settings.flow = [0 0 1 1];
+settings.par  = 'None';
 
 if settings.flow(4)
     % tide settings

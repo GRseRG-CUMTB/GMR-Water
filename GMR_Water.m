@@ -74,7 +74,7 @@ if nargin < 1  % example for SCOA
     settings.methods = [1,1,1,1,1];
 
     % process flow
-    settings.flow = [0 0 1 0];
+    settings.flow = [1 1 1 1];
     settings.par  = 'None';
 
 elseif nargin == 1
@@ -116,5 +116,5 @@ if settings.flow(4)
     disp(['Analysis takes ',num2str(t_total), 'seconds.'])
     genReport(settings, [1,1])
 end
-
+close all
 disp('GMR_Water has done')

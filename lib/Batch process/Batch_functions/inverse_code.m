@@ -139,6 +139,9 @@ for Meth_id = 1:5
                                     elv_win = elv(win_indx);
                                     azi_win = azi(win_indx);
                                     time_win = time(win_indx);
+                                    if max(time_win) - min(time_win) < 600
+                                        continue
+                                    end
                                     [valid, RH_info_win] = snr2RH_info(elv_win, snr_win, azi_win, time_win, wave_length, tdatenum, ...
                                         sta_asl, tide_range, ...
                                         cur_sys, cur_band, cur_sat, PNR);
@@ -149,6 +152,9 @@ for Meth_id = 1:5
                                     end
                                 end
                             else % No winlsp
+                                if max(time) - min(time) < 60*30
+                                    continue
+                                end
                                 [valid, RH_info_arc] = snr2RH_info(elv, snr, azi, time, wave_length, tdatenum, ...
                                     sta_asl, tide_range, ...
                                     cur_sys, cur_band, cur_sat, PNR);
@@ -210,6 +216,9 @@ for Meth_id = 1:5
                             elv_win = elv(win_indx);
                             azi_win = azi(win_indx);
                             time_win = time(win_indx);
+                            if max(time_win) - min(time_win) < 600
+                                continue
+                            end
                             [valid, RH_info_win] = mp2RH_info(elv_win, M_win, azi_win, time_win, a, b, tdatenum, ...
                                 sta_asl, tide_range, ...
                                 cur_sys, cur_band, cur_sat, Meth_id, PNR);
@@ -220,6 +229,9 @@ for Meth_id = 1:5
                             end
                         end
                     else
+                        if max(time) - min(time) < 60*30
+                            continue
+                        end
                         [valid, RH_info_arc] = mp2RH_info(elv, M, azi, time, a, b,  tdatenum, ...
                             sta_asl, tide_range, ...
                             cur_sys, cur_band, cur_sat, Meth_id, PNR);
@@ -280,6 +292,9 @@ for Meth_id = 1:5
                                 elv_win = elv(win_indx);
                                 azi_win = azi(win_indx);
                                 time_win = time(win_indx);
+                                if max(time_win) - min(time_win) < 600
+                                    continue
+                                end
                                 [valid, RH_info_win] = mp2RH_info(elv_win, M_win, azi_win, time_win, a, b, tdatenum, ...
                                     sta_asl, tide_range, ...
                                     cur_sys, cur_band, cur_sat, Meth_id, PNR);
@@ -290,6 +305,9 @@ for Meth_id = 1:5
                                 end
                             end
                         else
+                            if max(time) - min(time) < 60*30
+                                continue
+                            end
                             [valid, RH_info_arc] = mp2RH_info(elv, M, azi, time, a, b, tdatenum, ...
                                 sta_asl, tide_range, ...
                                 cur_sys, cur_band, cur_sat, Meth_id, PNR);

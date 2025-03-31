@@ -17,7 +17,7 @@ settings.rrs = app.RobustregressionstrategyCheckBox.Value;
 settings.bspline = app.BsplineCheckBox.Value;
 % display settings
 settings.cor = app.CorrelationscatterCheckBox.Value;
-settings.azi = app.AzimuthCheckCheckBox.Value;
+% settings.azi = app.AzimuthCheckCheckBox.Value;
 settings.day_num = app.DailyNumberCheckBox.Value;
 % results settings
 settings.results = app.AnalysisResultsEditField.Value;

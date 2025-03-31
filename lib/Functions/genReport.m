@@ -161,6 +161,7 @@ pdfFile = [settings.results,'\report.pdf'];
 
 system([[pwd, '/lib/Functions/wkhtmltopdf.exe'], ' --enable-local-file-access ',filename, ' ',pdfFile]);
 disp('report generated successfully.');
+open(filename)
 
 function pngFiles = getPNGPaths(folderPath)
     
