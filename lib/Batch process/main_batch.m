@@ -50,13 +50,15 @@ if settings.flow(3)
     RH_info_all = sortrows(RH_info_all,"Time");
     RH_info_all(isnan(RH_info_all.RH),:) = [];
 
+
+    
+    [~, RH_info_all, ~] = Tidal_correction(RH_info_all, sta_lat, sta_asl, tide_range);
+    
     band = RH_info_all.BAND;
     fp_all = unique(RH_info_all.System+band);
-
     for fp = 1:numel(fp_all)
         cur_sysband = fp_all(fp);
         RH_fp = RH_info_all(RH_info_all.System+band == cur_sysband,:);
-        [~, RH_fp, ~] = Tidal_correction(RH_fp, sta_lat, sta_asl, tide_range);
 
         Final_info.(cur_sysband) = RH_fp;
     end

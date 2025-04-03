@@ -97,7 +97,7 @@ if string(settings.par) == "None"
             ahgt = station_info.sta_asl;
             tdate = tdatenum-tlen/3;
             [hinit,xinit,sfacspre,sfacsjs,consts_out,roughout] = inverse(dt,snrfile,hell,hgtlim,ahgt, ...
-                1,tdate,tlen,kspac,1,1,1,1,"Off","Off",roughin);
+                1,tdate,tlen,kspac,1,0,0,0,"Off","Off",roughin);
 
             % saving results
             save(temp_file, ...

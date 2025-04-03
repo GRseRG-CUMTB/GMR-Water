@@ -67,8 +67,7 @@ title('Average daily inversion points','FontWeight','bold');
 nexttile(30,[2,1])
 ir_t = RH_info_all{:,"Time"};
 ir_h = settings.antenna_height - RH_info_all{:,"RH"};
-ir_h = ir_h-nanmean(ir_h);
-figure
+
 cor_scatter(ir_h, datenum(ir_t), sea_level_tide, datenum(time_tide))
 ylabel('Tide gauge (m)')
 xlabel('GNSS-IR raw inversion value (m)')

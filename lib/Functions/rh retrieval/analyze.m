@@ -92,7 +92,10 @@ end
 %% output fresnel & plot SNR
 if string(app.fresnel_kml.Value) == "Yes" && nol1==0
     % currently for L1 signal, could change to L2, see function description
-    fresout = [pwd,'\results\fresnel_kml\'];
+    fresout = [pwd,'\fresnel_kml\'];
+    if ~exist(fresout, "dir")
+        mkdir(fresout)
+    end
     set(0,'DefaultFigureVisible', 'off');
     filename1 = googlefresnel(plat,plon,SNRdata(1,2),SNRdata(1,3),doo,fresout,reflh1(id),299792458/Lcar);
     filename2 = googlefresnel(plat,plon,SNRdata(end,2),SNRdata(end,3),doo,fresout,reflh1(id),299792458/Lcar);

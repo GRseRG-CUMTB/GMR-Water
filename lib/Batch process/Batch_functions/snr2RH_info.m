@@ -55,8 +55,13 @@ end
 cur_rh = refl_h(id);  % Final rh
 trop_c = cur_rh - pre_h; % Tropospheric correction
 valid = 1;
-if cur_rh > sta_asl-tide_range(1) || cur_rh < sta_asl-tide_range(2) || max(psd)<PNR*mean(pks(1:end-1))
+if cur_rh > sta_asl-tide_range(1) || cur_rh < sta_asl-tide_range(2) || max(psd)<PNR*mean(psd)
     valid = 0;
+end
+if numel(pks) > 1
+    if pks(end)/pks(end-1) < 1.5
+        valid = 0;
+    end
 end
 
 if valid == 1

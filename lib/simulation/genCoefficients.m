@@ -9,7 +9,7 @@ sett.sat.num_obs = 200;
 seasfc_rough = 0.001;
 sett.sfc.height_std = seasfc_rough;
 
-sett.sat.elev_lim = [15, 25];
+sett.sat.elev_lim = [5, 15];
 sett.ant.model = ant_model;
 sett.ant.radome = radome_mod;
 sett.ref.ignore_vec_apc_arp = true;

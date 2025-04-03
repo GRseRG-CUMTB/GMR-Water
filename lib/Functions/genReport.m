@@ -157,10 +157,11 @@ fprintf(fileID, '</html>\n');
 % Close the file
 fclose(fileID);
 
-pdfFile = [settings.results,'\report.pdf'];
-
-system([[pwd, '/lib/Functions/wkhtmltopdf.exe'], ' --enable-local-file-access ',filename, ' ',pdfFile]);
+% pdfFile = [settings.results,'\report.pdf'];
+% 
+% system([[pwd, '/lib/Functions/wkhtmltopdf.exe'], ' --enable-local-file-access ',filename, ' ',pdfFile]);
 disp('report generated successfully.');
+open(filename)
 
 function pngFiles = getPNGPaths(folderPath)
     
@@ -169,7 +170,6 @@ function pngFiles = getPNGPaths(folderPath)
     
     pngFiles = strings(size(fileList));
     for i = 1:length(fileList)
-        % 获取相对于输入文件夹的路径
         [~, relPath] = fileparts(fileList(i).folder);
         relPath = strrep(fullfile(relPath, fileList(i).name), [folderPath filesep], '');
         pngFiles(i) = relPath;

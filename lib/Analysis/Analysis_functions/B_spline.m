@@ -6,7 +6,7 @@ sfacs_init = [];
 knots = [];
 start_time = datetime(start_date, 'ConvertFrom', 'datenum');
 end_time = datetime(end_date,'ConvertFrom','datenum');
-disp('B spline start...')
+% disp('B spline start...')
 for t_day = start_time: days(1): end_time
     RH_day = RH_info_all(RH_info_all.Time>= t_day & RH_info_all.Time< t_day+days(1),:);
     t = datenum(RH_day.Time);

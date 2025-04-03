@@ -4,6 +4,9 @@ function [hinit,xinit,sfacspre,sfacsjs,consts_out,roughout] = inverse(dt,snrfile
 
 glonasswlen = load('glonasswlen.mat');
 glonasswlen = glonasswlen.glonasswlen;
+
+load('MethodsSettings.mat','PNR','WinLSP')
+
 if numel(varargin) ~= 0
     app = varargin{1};
 end
@@ -28,10 +31,10 @@ cursat = snrfile(1,1); % sat number
 stind = 1;
 s1ind = 0;
 
-sinelv1_all = [];
-snr1_all = [];
-t1_all = [];
-satno_all = [];
+sinelv_all = [];
+snr_all = [];
+time_all = [];
+satPRN_all = [];
 antno_all = [];
 
 if snrfile(2,2) - snrfile(1,2) < 0 % Descending order
@@ -56,62 +59,86 @@ for ind = 2:size(snrfile,1)
             if ind-stind < (300/dt) 
                 ind = stind;
             else
-                sinelvt1 = snrfile(stind:ind-1, 2);
-                snr1tmp = snrfile(stind:ind-1, 7);
-                t1tmp = snrfile(stind:ind-1, 9);
-                satnotmp = snrfile(stind:ind-1, 1);
-                antnotmp = snrfile(stind:ind-1, 10);
-                del = isnan(snr1tmp(:,1));
-                sinelvt1(del,:) = [];
+                elv = snrfile(stind:ind-1, 2);
+                azi = snrfile(stind:ind-1, 3);
+                snr = snrfile(stind:ind-1, 7);
+                time = snrfile(stind:ind-1, 9);
+                satPRN = snrfile(stind:ind-1, 1);
+                del = isnan(snr(:,1));
+                elv(del,:) = [];
 
-                if numel(sinelvt1) > 2
-                    sinelvt1 = sind(sinelvt1);
-                    snr1tmp(del,:) = [];
-                    t1tmp(del,:) = [];
-                    satnotmp(del,:) = [];
-                    antnotmp(del,:) = [];
+                if numel(elv) > 2
+                    sinelv = sind(elv);
+                    snr(del,:) = [];
+                    time(del,:) = [];
+                    satPRN(del,:) = [];
+                    azi(del,:) = [];
 
-                    p1 = polyfit(sinelvt1, snr1tmp, 2); % detrend
-                    y1 = polyval(p1, sinelvt1);
-                    sinelv1_all = [sinelv1_all; sinelvt1];
-                    snr1tmp = snr1tmp - y1;
-                    snr1_all = [snr1_all; snr1tmp];
-                    t1_all = [t1_all; t1tmp];
-                    satno_all = [satno_all; satnotmp];
-                    antno_all = [antno_all; antnotmp];
+                    p1 = polyfit(sinelv, snr, 3); % detrend
+                    y1 = polyval(p1, sinelv);
+                    sinelv_all = [sinelv_all; sinelv];
+                    snr = snr - y1;
+                    snr_all = [snr_all; snr];
+                    time_all = [time_all; time];
+                    satPRN_all = [satPRN_all; satPRN];
 
-                    if sinelvt1(2) - sinelvt1(1) < 0 % ensure the sine in ascending sort
-                        sinelvt1 = flipud(sinelvt1);
-                        snr1tmp = flipud(snr1tmp);
+                    if sinelv(2) - sinelv(1) < 0 % ensure the sine in ascending sort
+                        sinelv = flipud(sinelv);
+                        snr = flipud(snr);
+                        time = flipud(time);
+                        azi = flipud(azi);
                     end
 
                     if snrfile(stind,1) < 33
-                        L1car = 299792458 / 1575.42e06; % for GPS
+                        wave_length = 299792458 / 1575.42e06; % for GPS
                     elseif snrfile(stind,1) > 32 && snrfile(stind,1) < 57
-                        L1car = glonasswlen(snrfile(stind,1)-32);
+                        wave_length = glonasswlen(snrfile(stind,1)-32);
                     elseif snrfile(stind,1) > 56 && snrfile(stind,1) < 56+36+1
-                        L1car = 299792458 / 1575.42e06;
+                        wave_length = 299792458 / 1575.42e06;
                     else
-                        L1car = 299792458 / 1575.42e06;
+                        wave_length = 299792458 / 1575.42e06;
                     end
 
+                    if all(diff(sinelv) > 0) || all(diff(sinelv) <= 0)
+                        if WinLSP.Enable
+                            % winLSP
+                            for win_s = min(elv): WinLSP.gap: max(elv)-WinLSP.length
+                                win_indx = elv>win_s & elv<win_s+WinLSP.length;
+                                snr_win = snr(win_indx);
+                                elv_win = elv(win_indx);
+                                azi_win = azi(win_indx);
+                                time_win = time(win_indx);
+                                if max(time_win) - min(time_win) < 600
+                                    continue
+                                end
+                                [valid, RH_info_win] = snr2RH_info(elv_win, snr_win, azi_win, time_win, wave_length, floor(tdatenum), ...
+                                    hell, hgtlim, ...
+                                    'None', 'None', 0, PNR);
+                            end
+                            if valid
+                                s1ind = s1ind + 1;
+                                hinit(s1ind) = RH_info_win.RH;
+                                xinit(s1ind) = mean(time_win); % timing of spectral analysis estimates
 
-                    prec1 = 0.001;
+                                snr_datatmp = snrfile(stind:ind-1, :);
+                                tanthter(s1ind) = RH_info_win.ROC * 86400;
+                                siteinit(s1ind) = snr_datatmp(end,10);
+                            end
+                        else
+                            [valid, RH_info] = snr2RH_info(elv, snr, azi, time, wave_length, floor(tdatenum), ...
+                                hell, hgtlim, ...
+                                'None', 'None', 0, PNR);
+                            if valid
+                                s1ind = s1ind + 1;
+                                hinit(s1ind) = RH_info.RH;
+                                xinit(s1ind) = mean(time); % timing of spectral analysis estimates
 
-                    if all(diff(sinelvt1) > 0) || all(diff(sinelvt1) <= 0)
-                        [refl_h, id, psd, pks] = snr2RH_lsp(sinelvt1, snr1tmp, L1car, hell, hgtlim);
-
-                        if refl_h(id) > hell-hgtlim(2) & refl_h(id) < hell-hgtlim(1) & max(psd)>10*mean(pks(1:end-1))
-                            s1ind = s1ind + 1;
-                            hinit(s1ind) = refl_h(id);
-                            xinit(s1ind) = mean(t1tmp); % timing of spectral analysis estimates
-
-                            snr_datatmp = snrfile(stind:ind-1, :);
-                            tanthter(s1ind) = tand(mean(snr_datatmp(:,2))) / ...
-                                (((pi/180) * (snr_datatmp(end,2) - snr_datatmp(1,2))) / ...
-                                ((snr_datatmp(end,9) - snr_datatmp(1,9)) * 86400));
-                            siteinit(s1ind) = snr_datatmp(end,10);
+                                snr_datatmp = snrfile(stind:ind-1, :);
+                                tanthter(s1ind) = RH_info.ROC * 86400;
+                                siteinit(s1ind) = snr_datatmp(end,10);
+                            end
                         end
+                        
                     end
                 end
             end
@@ -125,7 +152,7 @@ for ind = 2:size(snrfile,1)
     fwd2 = fwd1;
 end
 
-if min(t1_all) > tdatenum+tlen/3 || numel(xinit) < 2
+if min(time_all) > tdatenum+tlen/3 || numel(xinit) < 2
     disp('no data - continue')
     sfacsjs  = NaN;
     sfacspre = NaN;
@@ -154,8 +181,8 @@ tanthter(delete)=[];
 siteinit(delete)=[];
 
 if largetides == 0
-    indt = t1_all(:)>tdatenum+tlen/3 & t1_all(:)<tdatenum+2*tlen/3;
-    t1_allt = t1_all(indt);
+    indt = time_all(:)>tdatenum+tlen/3 & time_all(:)<tdatenum+2*tlen/3;
+    t1_allt = time_all(indt);
     maxt1gap = max(diff(sort(t1_allt)));
 else
     indt = xinit(:)>tdatenum+tlen/3 & xinit(:)<tdatenum+2*tlen/3;
@@ -209,13 +236,14 @@ end
 consts = gps+glo+gal+bds;
 sfacs_0 = [sfacs_0 zeros(1,consts*2)];
 
+antno_all = ones(size(snr_all));
 if is_rough == "On"
     sfacs_0 = [sfacs_0 roughin]; % add roughness
-    tempfun = @(sfacs) bspline_js(sfacs,t1_all,sinelv1_all,snr1_all,knots,...
-        p,satno_all,gps,glo,gal,bds,antno_all,meanhgts);
+    tempfun = @(sfacs) bspline_js(sfacs,time_all,sinelv_all,snr_all,knots,...
+        p,satPRN_all,gps,glo,gal,bds,antno_all,meanhgts);
 else
-    tempfun = @(sfacs) bspline_jsnorough(sfacs,t1_all, sinelv1_all, snr1_all, knots,...
-        p,satno_all,gps,glo,gal,bds,antno_all,meanhgts);
+    tempfun = @(sfacs) bspline_jsnorough(sfacs,time_all, sinelv_all, snr_all, knots,...
+        p,satPRN_all,gps,glo,gal,bds,antno_all,meanhgts);
 end
 options = optimoptions(@lsqnonlin,'Algorithm','levenberg-marquardt', 'Display','off');
 tic
@@ -225,13 +253,8 @@ disp('****least squares done****')
 
 % To plot model vs real snr data
 if is_plotmodsnr == "On"
-    plotmodsnr = 1;
-elseif is_plotmodsnr == "Off"
-    plotmodsnr = 0;
-end
-if plotmodsnr == 1
-    residout = bsp_snrout(app,sfacs_ls,t1_all,sinelv1_all,snr1_all,knots,...
-        p,satno_all,gps,glo,gal,bds,antno_all,meanhgts,dtdv,elv_low,elv_high);
+    residout = bsp_snrout(app,sfacs_ls,time_all,sinelv_all,snr_all,knots,...
+        p,satPRN_all,gps,glo,gal,bds,antno_all,meanhgts,dtdv,elv_low,elv_high);
 end
 
 if is_rough == "On"

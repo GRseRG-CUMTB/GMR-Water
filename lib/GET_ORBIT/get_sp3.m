@@ -1,4 +1,6 @@
 function get_sp3(fig, start_date, end_date, sp3_option, save_path)
+start_date = datetime(start_date);
+end_date = datetime(end_date);
 start_date_jd = juliandate(start_date); % start date
 [gpsweeks,sows,~] = jd2gps(start_date_jd);
 dows = sows/86400;

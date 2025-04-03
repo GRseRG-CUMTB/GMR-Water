@@ -14,7 +14,7 @@ roc(delete,:)  = [];
 rh(delete,:)   = [];
 RH_info_all(delete,:) = [];
 mean_rh = mean(rh);
-rh_m = rh-mean(rh);
+rh_m = rh - mean_rh;
 load('tidefreqs.mat')
 ju = [12 20 41 47 56]; % O1, K1, N2, M2, S2
 

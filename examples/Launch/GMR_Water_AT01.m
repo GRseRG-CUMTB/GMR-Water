@@ -15,11 +15,11 @@ settings.Out_path          = 'G:\GNSS-IR_data\Solutions\water level\AT01\2023';
 settings.station_name      = 'AT01';
 
 % Inversion settings
-settings.methods = [1,1,1,1,1];
+settings.methods = [1,0,0,0,0];
 
 % process flow
 settings.flow = [0 1 1 1];
-settings.par  = '6';
+settings.par  = 'None';
 
 if settings.flow(4)
     % tide settings
@@ -27,7 +27,7 @@ if settings.flow(4)
     settings.tide_file = 'E:\GMR-Water\examples\data\tide_data\at01_tide_data_2023.mat';
 
     % qc settings
-    settings.efps = {'S1W'};
+    settings.efps = {'S2W'};
     settings.sigma = 1;
 
     % combination settings
