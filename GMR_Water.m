@@ -52,7 +52,7 @@ function GMR_Water(varargin)
 %     .par
 %       string - Parallel computing option.
 %       Options: 'None' (disable) or '2' '4' '6' '8' (enable, Number of parallel).
-% %%%%%%%%%%%%%%%%%%%%%%%  Above is need for retrieval  %%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%  Above is need for retrieval  %%%%%%%%%%%%%%%%%%%
 %     % settings
 %     .Tide_available
 %       numeric - Tide data availability flag (0=disable, 1=enable tide data).
@@ -90,6 +90,7 @@ function GMR_Water(varargin)
 %     .results
 %       string - Output directory path for analysis results.
 %       Example: 'E:\GMR-water\examples\results\analysis_results'
+% %%%%%%%%%%%%%%%%%%%%%%%  Above is need for analysis  %%%%%%%%%%%%%%%%%%%%
 %--------------------------------------------------------------------------
 addpath(genpath(pwd))
 %% Retrieval
